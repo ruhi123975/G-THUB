@@ -1,25 +1,999 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>HACK3R - Siber Güvenlik Platformu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #00ff41;
+            --secondary-color: #0ff;
+            --dark-bg: #0a0e27;
+            --darker-bg: #050812;
+            --accent-color: #ff006e;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
+            color: var(--primary-color);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 255, 65, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 255, 200, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+            animation: bgShift 15s ease-in-out infinite;
+        }
+
+        @keyframes bgShift {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Navigation Bar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(5, 8, 18, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--primary-color);
+            z-index: 1000;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            color: var(--secondary-color);
+            text-shadow: 0 0 10px var(--secondary-color);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Main Container */
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 50px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 80px;
+            gap: 50px;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            animation: typing 3s steps(40, end), blink-caret .75s step-end infinite;
+            overflow: hidden;
+            border-right: 3px solid var(--primary-color);
+            white-space: nowrap;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--primary-color); }
+        }
+
+        .hero p {
+            font-size: 16px;
+            color: var(--secondary-color);
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeInUp 1s 0.5s forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeInUp 1s 1s forwards;
+        }
+
         button {
-            background-color: blue;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
+            padding: 12px 30px;
+            border: 2px solid var(--primary-color);
+            background: transparent;
+            color: var(--primary-color);
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            font-weight: bold;
             cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-color);
+            z-index: -1;
+            transition: left 0.3s;
+        }
+
         button:hover {
-            background-color: darkblue;
+            color: var(--darker-bg);
+            box-shadow: 0 0 20px var(--primary-color);
         }
-        
+
+        button:hover::before {
+            left: 0;
+        }
+
+        .btn-secondary {
+            border-color: var(--secondary-color);
+            color: var(--secondary-color);
+        }
+
+        .btn-secondary::before {
+            background: var(--secondary-color);
+        }
+
+        .btn-secondary:hover {
+            color: var(--darker-bg);
+            box-shadow: 0 0 20px var(--secondary-color);
+        }
+
+        .hero-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .code-block {
+            background: rgba(0, 255, 65, 0.05);
+            border: 2px solid var(--primary-color);
+            border-radius: 5px;
+            padding: 20px;
+            font-size: 12px;
+            overflow-x: auto;
+            animation: glitch 3s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-2px); }
+            75% { transform: translateX(2px); }
+        }
+
+        /* Features Section */
+        .features {
+            margin: 100px 0;
+            opacity: 0;
+            animation: fadeInUp 1s 1.5s forwards;
+        }
+
+        .section-title {
+            font-size: 36px;
+            margin-bottom: 50px;
+            text-align: center;
+            color: var(--primary-color);
+            text-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+            position: relative;
+            padding-bottom: 20px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--secondary-color);
+            box-shadow: 0 0 20px var(--secondary-color);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: rgba(0, 255, 65, 0.05);
+            border: 2px solid var(--primary-color);
+            border-radius: 5px;
+            padding: 30px;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 255, 65, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+            transform: translateY(-10px);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: rgba(0, 255, 65, 0.8);
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+
+        /* Statistics Section */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 100px 0;
+            opacity: 0;
+            animation: fadeInUp 1s 2s forwards;
+        }
+
+        .stat-item {
+            background: rgba(0, 255, 65, 0.1);
+            border: 2px solid var(--secondary-color);
+            padding: 30px;
+            text-align: center;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .stat-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 255, 200, 0.5);
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--secondary-color);
+        }
+
+        /* Services Section */
+        .services {
+            margin: 100px 0;
+            opacity: 0;
+            animation: fadeInUp 1s 2.5s forwards;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, rgba(0, 255, 65, 0.1) 0%, rgba(0, 255, 200, 0.05) 100%);
+            border: 2px solid var(--primary-color);
+            padding: 30px;
+            border-radius: 5px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .service-card:hover {
+            border-color: var(--accent-color);
+            transform: translateX(10px);
+            box-shadow: 0 0 30px rgba(255, 0, 110, 0.4);
+        }
+
+        .service-card h4 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .service-card p {
+            font-size: 13px;
+            color: rgba(0, 255, 65, 0.7);
+        }
+
+        /* Team Section */
+        .team {
+            margin: 100px 0;
+            opacity: 0;
+            animation: fadeInUp 1s 3s forwards;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .team-member {
+            background: rgba(0, 255, 65, 0.05);
+            border: 2px solid var(--primary-color);
+            padding: 30px;
+            text-align: center;
+            border-radius: 5px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .team-member:hover {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
+            transform: translateY(-15px);
+        }
+
+        .member-avatar {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 15px;
+            border: 3px solid var(--secondary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            background: rgba(0, 255, 200, 0.1);
+        }
+
+        .member-name {
+            font-size: 18px;
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+
+        .member-role {
+            font-size: 13px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .member-social {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .member-social a {
+            color: var(--accent-color);
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+
+        .member-social a:hover {
+            color: var(--secondary-color);
+            transform: scale(1.2);
+        }
+
+        /* Contact Section */
+        .contact {
+            background: rgba(0, 255, 65, 0.05);
+            border: 2px solid var(--primary-color);
+            padding: 50px;
+            border-radius: 5px;
+            margin: 100px 0;
+            opacity: 0;
+            animation: fadeInUp 1s 3.5s forwards;
+        }
+
+        .contact h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px var(--primary-color);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .contact-icon {
+            font-size: 24px;
+            color: var(--secondary-color);
+        }
+
+        .contact-item p {
+            color: var(--primary-color);
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            background: rgba(0, 255, 65, 0.05);
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            font-family: 'Courier New', monospace;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: rgba(0, 255, 65, 0.5);
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 10px rgba(0, 255, 200, 0.3);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(5, 8, 18, 0.95);
+            border-top: 2px solid var(--primary-color);
+            padding: 30px 50px;
+            text-align: center;
+            color: var(--primary-color);
+            margin-top: 100px;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+        }
+
+        footer p {
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .footer-links a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+            text-shadow: 0 0 10px var(--accent-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 20px;
+            }
+
+            nav ul {
+                gap: 15px;
+            }
+
+            .hero {
+                flex-direction: column;
+                margin-top: 200px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .container {
+                padding: 0 20px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                padding: 10px;
+            }
+
+            .hero h1 {
+                font-size: 24px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+        }
+
+        /* Loading Animation */
+        .loader {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(0, 255, 65, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
-    <button>salam</button>
+    <div class="animated-bg"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">
+            <i class="fas fa-shield-alt"></i> HACK3R
+        </div>
+        <ul>
+            <li><a href="#home">Ana Sayfa</a></li>
+            <li><a href="#features">Özellikler</a></li>
+            <li><a href="#services">Hizmetler</a></li>
+            <li><a href="#team">Takım</a></li>
+            <li><a href="#contact">İletişim</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <h1>> Siber Dünyaya Hoşgeldiniz</h1>
+                <p>Güvenliğinizi sağlamak, tehditlerini önceden tespit etmek ve sisteminizi korunak için buradayız. En son teknoloji ile donanmış ekibimiz her zaman hazır.</p>
+                <div class="hero-buttons">
+                    <button>Başla</button>
+                    <button class="btn-secondary">Daha Fazla Bilgi</button>
+                </div>
+                <p style="font-size: 12px; opacity: 0.7;">> System Status: ONLINE ✓ | Security Level: MAX | Protocol: ENCRYPTED</p>
+            </div>
+            <div class="hero-image">
+                <div class="code-block">
+&gt; sudo ./security_scan.sh<br>
+Scanning network... [████████░░] 80%<br><br>
+&gt; Vulnerability Detection:<br>
+✓ Port Scanning Complete<br>
+✓ SSL Certificate Valid<br>
+✓ Firewall Status: ACTIVE<br><br>
+&gt; System Secure ✓
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features" id="features">
+            <h2 class="section-title">>>> TEMEL ÖZELLİKLER</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-lock"></i></div>
+                    <h3>Enkripsiyon</h3>
+                    <p>Verileriniz 256-bit AES algoritması ile şifrelenir. Maksimum güvenlik garantisi.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-eye"></i></div>
+                    <h3>Gerçek Zamanlı İzleme</h3>
+                    <p>24/7 sistem izlemesi. Tehditler anında tespit edilir ve raporlanır.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>DDoS Koruması</h3>
+                    <p>Gelişmiş AI teknolojisi ile DDoS saldırılarından otomatik olarak korunun.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-network-wired"></i></div>
+                    <h3>Ağ Segmentasyonu</h3>
+                    <p>Ağınızı bölgelere ayırarak potansiyel riski minimuma indirin.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-file-shield"></i></div>
+                    <h3>Veri Yedekleme</h3>
+                    <p>Otomatik ve düzenli yedeklemeler ile verileriniz her zaman güvende.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-user-shield"></i></div>
+                    <h3>Kimlik Doğrulama</h3>
+                    <p>2FA, biometrik ve multi-factor authentication seçenekleri.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistics Section -->
+        <section class="stats">
+            <div class="stat-item">
+                <div class="stat-number">10.5K+</div>
+                <div class="stat-label">Korunan Sistem</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">99.9%</div>
+                <div class="stat-label">Uptime Garantisi</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Teknik Destek</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">150+</div>
+                <div class="stat-label">Ülkede Hizmet</div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="services" id="services">
+            <h2 class="section-title">>>> HİZMETLER</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h4><i class="fas fa-bug"></i> Penetration Testing</h4>
+                    <p>Sisteminizin güvenlik açıklarını profesyonel olaraktest edelim. Detaylı rapor ve çözüm önerileri.</p>
+                </div>
+                <div class="service-card">
+                    <h4><i class="fas fa-search"></i> Güvenlik Denetimi</h4>
+                    <p>Kapsamlı güvenlik denetimi ile sistem altyapınızı analiz edin.</p>
+                </div>
+                <div class="service-card">
+                    <h4><i class="fas fa-code"></i> Güvenli Yazılım Geliştirme</h4>
+                    <p>Başından itibaren güvenliği göz önünde bulundurarak uygulama geliştirin.</p>
+                </div>
+                <div class="service-card">
+                    <h4><i class="fas fa-graduation-cap"></i> Eğitim & Danışmanlık</h4>
+                    <p>Ekibinizi siber güvenlik konusunda eğitin ve bilinçlendirin.</p>
+                </div>
+                <div class="service-card">
+                    <h4><i class="fas fa-ambulance"></i> Olay Yanıtı</h4>
+                    <p>Siber saldırı durumunda hızlı ve etkili müdahale hizmetleri.</p>
+                </div>
+                <div class="service-card">
+                    <h4><i class="fas fa-cogs"></i> Sistem Sertifikasyonu</h4>
+                    <p>ISO 27001, SOC 2 ve diğer güvenlik sertifikasyon süreçleri.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section class="team" id="team">
+            <h2 class="section-title">>>> UZMAN TAKIMIZ</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-avatar">👨‍💻</div>
+                    <div class="member-name">Ahmet Kaya</div>
+                    <div class="member-role">Sistem Güvenliği Uzmanı</div>
+                    <p style="font-size: 13px; margin-bottom: 15px; color: rgba(0, 255, 65, 0.7);">15+ yıl deneyim | CEH | CISSP</p>
+                    <div class="member-social">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">👩‍💼</div>
+                    <div class="member-name">Zeynep Demir</div>
+                    <div class="member-role">Ağ Güvenliği Mimarı</div>
+                    <p style="font-size: 13px; margin-bottom: 15px; color: rgba(0, 255, 65, 0.7);">12+ yıl deneyim | CCNA | OSCP</p>
+                    <div class="member-social">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">👨‍🔬</div>
+                    <div class="member-name">Eren Yılmaz</div>
+                    <div class="member-role">Kötü Amaçlı Yazılım Analisti</div>
+                    <p style="font-size: 13px; margin-bottom: 15px; color: rgba(0, 255, 65, 0.7);">10+ yıl deneyim | GIAC | GREM</p>
+                    <div class="member-social">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">👩‍💻</div>
+                    <div class="member-name">Merve Şen</div>
+                    <div class="member-role">Kod Güvenliği Uzmanı</div>
+                    <p style="font-size: 13px; margin-bottom: 15px; color: rgba(0, 255, 65, 0.7);">8+ yıl deneyim | CSSLP | OWASP</p>
+                    <div class="member-social">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact" id="contact">
+            <h2>>>> İLETİŞİM FORMU</h2>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                    <div>
+                        <p><strong>Telefon:</strong></p>
+                        <p>+90 (212) 123-4567</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                    <div>
+                        <p><strong>Email:</strong></p>
+                        <p>info@hack3r.com</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div>
+                        <p><strong>Adres:</strong></p>
+                        <p>İstanbul, Türkiye</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fas fa-clock"></i></div>
+                    <div>
+                        <p><strong>Saatler:</strong></p>
+                        <p>24/7 Açık</p>
+                    </div>
+                </div>
+            </div>
+            <form class="contact-form" id="contactForm">
+                <input type="text" placeholder=">> Ad Soyadınız" required>
+                <input type="email" placeholder=">> Email Adresiniz" required>
+                <input type="text" placeholder=">> Konu" required>
+                <textarea placeholder=">> Mesajınız..."></textarea>
+                <button type="submit" class="submit-btn">Gönder</button>
+            </form>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 HACK3R - Siber Güvenlik Platformu. Tüm Hakları Saklıdır.</p>
+        <p>Teknik Destek: support@hack3r.com | Acil Durum: security@hack3r.com</p>
+        <div class="footer-links">
+            <a href="#">Gizlilik Politikası</a>
+            <a href="#">Kullanım Şartları</a>
+            <a href="#">İletişim</a>
+            <a href="#">Blog</a>
+            <a href="#">Kariyer</a>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form Submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Mesajınız başarıyla gönderilmiştir. Yakında sizinle iletişime geçeceğiz!');
+            this.reset();
+        });
+
+        // Scroll Animation Trigger
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.features, .stats, .services, .team, .contact').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Button Click Effects
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const ripple = document.createElement('span');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(0, 255, 65, 0.6)';
+                ripple.style.width = ripple.style.height = '20px';
+                ripple.style.animation = 'ripple 0.6s ease-out';
+                this.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        // Add ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        
+        document.head.appendChild(style);
+
+        // Cursor Tracking Effect (Optional)
+        document.addEventListener('mousemove', (e) => {
+            const stars = document.querySelectorAll('.feature-card, .service-card, .team-member');
+            stars.forEach(star => {
+                const x = (e.clientX - star.offsetLeft) / star.offsetWidth;
+                const y = (e.clientY - star.offsetTop) / star.offsetHeight;
+                star.style.setProperty('--x', x);
+                star.style.setProperty('--y', y);
+            });
+        });
+    </script>
 </body>
-</html>
+</html>    
